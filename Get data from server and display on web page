@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complex AJAX Example</title>
+</head>
+<body>
+    <h1>Complex AJAX Example</h1>
+    <div id="data-container"></div>
+
+    <script>
+        // Function to make an AJAX request
+        function fetchData() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://api.example.com/data', true);
+
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    var data = JSON.parse(xhr.responseText);
+                    displayData(data);
+                } else {
+                    console.error('Request failed with status', xhr.status);
+                }
+            };
+
+            xhr.onerror = function() {
+                console.error('Request failed');
+            };
+
+            xhr.send();
+        }
+
+        // Function to display data on the webpage
+        function displayData(data) {
+            var container = document.getElementById('data-container');
+            var html = '<h2>Data</h2><ul>';
+            data.forEach(function(item) {
+                html += '<li>' + item.name + ' - ' + item.value + '</li>';
+            });
+            html += '</ul>';
+            container.innerHTML = html;
+        }
+
+        // Fetch data when the page loads
+        window.onload = fetchData;
+    </script>
+</body>
+</html>
